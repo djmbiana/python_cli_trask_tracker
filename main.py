@@ -1,7 +1,6 @@
 import json
 import os
 import click
-import time
 import datetime
 
 if os.path.exists("tasks.json"):
