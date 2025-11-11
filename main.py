@@ -1,11 +1,8 @@
 import json
 import os
 import click
-
-@click.group()
-def taskie():
-    pass
-
+import time
+import datetime
 
 if os.path.exists("tasks.json"):
     with open("tasks.json", mode="r") as json_file:
@@ -13,9 +10,9 @@ if os.path.exists("tasks.json"):
 else:
     tasks = []
 
-
-
-
+@click.group()
+def taskie():
+    pass
 
 @taskie.command()
 @click.argument("description")
@@ -25,21 +22,31 @@ def add(description):
         new_id = max_id + 1
     else:
         new_id = 1
+    
+    time_created = datetime.datetime.now().replace(microsecond=0)
+    time_updated = datetime.datetime.now().replace(microsecond=0)
 
     user_task = {
         "id": new_id,
         "description": description,
-        "status": "todo"
+        "status": "todo",
+        "time_created": time_created,
+        "time_updated": time_updated
     }
 
     tasks.append(user_task)
 
     try:
         with open("tasks.json", mode="w") as json_file:
-            json.dump(tasks, json_file, indent=4)
+            json.dump(tasks, json_file, indent=4, default=str)
     except IOError as e:
         print("didnt work :()")
 
+    print("Task Added!")
+    print(f"ID: {user_task['id']}")
+    print(f"Description: {user_task['description']}")
+    print(f"Status: {user_task['status']}")
+    print(f"Created On: {user_task['time_created']}")
 
     
 if __name__ == "__main__":
