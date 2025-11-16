@@ -14,7 +14,7 @@ else:
 def taskie():
     pass
 
-
+# add tasks
 @taskie.command()
 @click.argument("description")
 def add(description):
@@ -46,6 +46,25 @@ def add(description):
         print(f"Description: {user_task['description']}")
         print(f"Status: {user_task['status']}")
         print(f"Created On: {user_task['time_created']}")
+
+@taskie.command()
+@click.argument("description")
+def update(id, description):
+    pass
+
+
+# view all tasks
+@taskie.command()
+def view():
+        with open("tasks.json", mode="r") as json_file:
+            data = json.load(json_file)
+        for task in data:
+            print(f"Task ID: {task['id']}")
+            print(f"Task Description: {task['description']}")
+            print(f"Status: {task['status']}")
+            print(f"Created On: {task['time_created']}")
+            print(f"Updated On: {task['time_updated']}")
+            print("=" * 30)
 
 
 if __name__ == "__main__":
