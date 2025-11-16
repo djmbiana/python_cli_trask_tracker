@@ -69,7 +69,7 @@ def update(id, description):
         print(f"Time Update: {time_updated}") 
 
 @taskie.command()
-@click.arguement("id", type=int)
+@click.argument("id", type=int)
 def delete(id):
     with open("tasks.json", mode="r") as json_record:
         data = json.load(json_record)
